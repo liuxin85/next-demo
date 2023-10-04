@@ -8,3 +8,10 @@ export async function GET(request: Request) {
   };
   return NextResponse.json(product);
 }
+
+export async function POST(request:Request, response: NextResponse) {
+  const body: unknown = await request.json();
+
+  console.log(body.address)
+  
+}
