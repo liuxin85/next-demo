@@ -1,3 +1,4 @@
+import { checkoutFormSchema } from "@/lib/validations";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,9 +10,14 @@ export async function GET(request: Request) {
   return NextResponse.json(product);
 }
 
-export async function POST(request:Request, response: NextResponse) {
+export async function POST(request: Request, response: NextResponse) {
   const body: unknown = await request.json();
 
-  console.log(body.address)
-  
+  const parsedForm = checkoutFormSchema.safeParse(body);
+
+  if (!parsedForm.success) {
+    return NextResponse.json(parsedForm.error, {
+      status: 422,
+    });
+  }
 }
